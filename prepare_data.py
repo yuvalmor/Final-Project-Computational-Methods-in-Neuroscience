@@ -14,12 +14,12 @@ def shuffle_data(data, labels):
     return data[random_order], labels[random_order]
 
 
-# Split Ablone's age into classes by in relation to the threshold value
+# Split Abalone age into three classes: young (age under 6, adult (age between 6 to 10 ), old (age above 10)
 def split_age_to_classes(labels):
     for label in range(len(labels)):
-        if labels[label] >= 1 and labels[label] <= 8:
+        if labels[label] < 6:
             labels[label] = 1
-        if labels[label] >= 9 and labels[label] <= 10:
+        if 6 <= labels[label] < 11:
             labels[label] = 2
         if labels[label] >= 11:
             labels[label] = 3
@@ -39,7 +39,6 @@ def prepare_data():
     # convert the data to floats
     data = data.astype(float)
     labels = labels.astype(float)
-    # convert ages into two classes 1- under the threshold, 2- above the threshold
     labels = split_age_to_classes(labels)
     # shuffle the data
     data, labels = shuffle_data(data, labels)
@@ -52,8 +51,3 @@ def split_data():
     train_data, train_labels = data[:num_of_rows, :], labels[:num_of_rows]
     test_data, test_labels = data[num_of_rows:, :], labels[num_of_rows:]
     return train_data, train_labels, test_data, test_labels
-
-
-def get_threshold(labels):
-    # set the threshold to be the average age
-    return np.average(labels)
