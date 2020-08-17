@@ -1,5 +1,6 @@
 import numpy as np
 
+
 SPLIT_PERCENTAGE = 0.8
 UNDER_THRESHOLD= 1
 ABOVE_THRESHOLD=2
@@ -15,12 +16,13 @@ def shuffle_data(data, labels):
 
 # Split Ablone's age into classes by in relation to the threshold value
 def split_age_to_classes(labels):
-    threshold = get_threshold(labels)
     for label in range(len(labels)):
-        if threshold > label:
-            labels[label] = ABOVE_THRESHOLD
-        else:
-            labels[label] = UNDER_THRESHOLD
+        if labels[label]>=1 and labels[label]<=8:
+            labels[label] = 1
+        if labels[label] >=9 and labels[label]<=10:
+            labels[label] = 2
+        if labels[label]>=11 and labels[label]<=29:
+            labels[label]= 3
     return labels
 
 
