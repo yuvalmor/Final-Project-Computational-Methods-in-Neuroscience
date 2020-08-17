@@ -1,6 +1,8 @@
 import numpy as np
 
 SPLIT_PERCENTAGE = 0.8
+UNDER_THRESHOLD= 1
+ABOVE_THRESHOLD=2
 
 gender_converter = {"M": 1, "F": 2, "I": 3}
 
@@ -10,6 +12,16 @@ def shuffle_data(data, labels):
     random_order = np.arange(data.shape[0])
     np.random.shuffle(random_order)
     return data[random_order], labels[random_order]
+
+# Split Ablone's age into classes by in relation to the threshold value
+def split_age_to_classes(labels):
+    threshold = get_threshold(labels)
+    for label in range(len(labels)):
+        if threshold > label:
+            labels[label] = ABOVE_THRESHOLD
+        else:
+            labels[label] = UNDER_THRESHOLD
+    return labels
 
 
 def prepare_data():
@@ -25,6 +37,8 @@ def prepare_data():
     # convert the data to floats
     data = data.astype(float)
     labels = labels.astype(float)
+    # convert ages into two classes 1- under the threshold, 2- above the threshold
+    labels=split_age_to_classes(labels)
     # shuffle the data
     data, labels = shuffle_data(data, labels)
     return data, labels
