@@ -1,9 +1,8 @@
 import numpy as np
 
-
 SPLIT_PERCENTAGE = 0.8
-UNDER_THRESHOLD= 1
-ABOVE_THRESHOLD=2
+UNDER_THRESHOLD = 1
+ABOVE_THRESHOLD = 2
 
 gender_converter = {"M": 1, "F": 2, "I": 3}
 
@@ -14,22 +13,23 @@ def shuffle_data(data, labels):
     np.random.shuffle(random_order)
     return data[random_order], labels[random_order]
 
+
 # Split Ablone's age into classes by in relation to the threshold value
 def split_age_to_classes(labels):
     for label in range(len(labels)):
-        if labels[label]>=1 and labels[label]<=8:
+        if labels[label] >= 1 and labels[label] <= 8:
             labels[label] = 1
-        if labels[label] >=9 and labels[label]<=10:
+        if labels[label] >= 9 and labels[label] <= 10:
             labels[label] = 2
-        if labels[label]>=11 and labels[label]<=29:
-            labels[label]= 3
+        if labels[label] >= 11:
+            labels[label] = 3
     return labels
 
 
 def prepare_data():
     # load data set
     data = np.genfromtxt("data/abalone_data", delimiter=",", dtype="str")
-    last_column = np.size(data, 1)-1
+    last_column = np.size(data, 1) - 1
     labels = data[:, last_column]
     # remove labels from data
     data = np.delete(data, [last_column], axis=1)
@@ -40,7 +40,7 @@ def prepare_data():
     data = data.astype(float)
     labels = labels.astype(float)
     # convert ages into two classes 1- under the threshold, 2- above the threshold
-    labels=split_age_to_classes(labels)
+    labels = split_age_to_classes(labels)
     # shuffle the data
     data, labels = shuffle_data(data, labels)
     return data, labels
