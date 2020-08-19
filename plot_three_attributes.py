@@ -15,7 +15,7 @@ Labels = [label for label in train_labels]
 
 for i in range(len(train_data)):
     figure.scatter(Length[i], Diameter[i], Whole_weight[i],
-               c=color_converter.get(Labels[i]), marker=shape_converter.get(Labels[i]))
+                   c=color_converter.get(Labels[i]), marker=shape_converter.get(Labels[i]))
 
 figure.set_xlabel('Length')
 figure.set_ylabel('Diameter')
