@@ -1,60 +1,57 @@
-import math
-
-import sns as sns
-from sklearn import metrics
-from sklearn.metrics import accuracy_score, mean_absolute_error, mean_squared_error, median_absolute_error
+from sklearn.model_selection import KFold
+from mlxtend.plotting import plot_learning_curves
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
 from prepare_data import split_data
+from sklearn.model_selection import learning_curve
 import matplotlib.pyplot as plt
+from sklearn.model_selection import cross_val_score
+import numpy as np
+from sklearn.model_selection import validation_curve
 
 
-def confusion_matrix_data(conf_matrix):
-    fix, ax = plt.subplots(figsize=(16, 12))
-    plt.suptitle('Confusion Matrix  on Data Set')
-    for ii, values in conf_matrix.items():
-        matrix = values['matrix']
-        title = values['title']
-        plt.subplot(2, 2, ii)  # starts from 1
-        plt.title(title);
-        sns.heatmap(matrix, annot=True, fmt='');
+# plot validation curve
+def plot_Validation_curve(estimator, title, X, y, axes=None, ylim=None, cv=None,
+                          n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
+    axes[0].set_title(title)
+    if ylim is not None:
+        axes[0].set_ylim(*ylim)
+    axes[0].set_xlabel("Training examples")
+    axes[0].set_ylabel("Score")
+
+    train_sizes, train_scores, test_scores, fit_times, _ = \
+        learning_curve(estimator, X, y, cv=cv, n_jobs=n_jobs,
+                       train_sizes=train_sizes,
+                       return_times=True,)
+    train_scores_mean = np.mean(train_scores, axis=1)
+    train_scores_std = np.std(train_scores, axis=1)
+    test_scores_mean = np.mean(test_scores, axis=1)
+    test_scores_std = np.std(test_scores, axis=1)
+
+    # Plot learning curve
+    axes[0].grid()
+    axes[0].fill_between(train_sizes, train_scores_mean - train_scores_std,
+                         train_scores_mean + train_scores_std, alpha=0.1,
+                         color="r")
+    axes[0].fill_between(train_sizes, test_scores_mean - test_scores_std,
+                         test_scores_mean + test_scores_std, alpha=0.1,
+                         color="g")
+    axes[0].plot(train_sizes, train_scores_mean, 'o-', color="r",
+                 label="Training score")
+    axes[0].plot(train_sizes, test_scores_mean, 'o-', color="g",
+                 label="Validation score")
+    axes[0].legend(loc="best")
+    return plt
+
 
 if __name__ == '__main__':
-    # neural network
-    scaler = StandardScaler()
-    # Fit only to the training data
-    train_X, train_y, test_X, test_y = split_data()
-    scaler.fit(train_X)
-    train_X = scaler.transform(train_X)
-    test_X = scaler.transform(test_X)
-
-    neural_network_class = MLPClassifier(hidden_layer_sizes=(20, 10, 20))
-    neural_network_class.fit(train_X, train_y)
-    predictions = neural_network_class.predict(test_X)
-    y_pred = predictions
-
-    # calculate ROC curve
-    # preds = neural_network_class.predict_proba(test_X)[:,1]
-    # calculate_roc_curve(test_y, y_pred,3)
-
-
-    # calculate Confusion Matrix
-    # print("Confusion Matrix")
-    # calculate_confusion_matrix(test_y, y_pred)
-
-    print("Accuracy of Neural Networks is")
-    print(accuracy_score(test_y, y_pred) * 100)
-
-    # Mean Absolute Error
-
-    mae = mean_absolute_error(test_y, y_pred);
-    print("MAE:" + str(mae))
-    # RMSE
-    rmse = math.sqrt(mean_squared_error(test_y, y_pred))
-    print("RMSE:" + str(rmse))
-    # Median Absolute error
-    Medae = median_absolute_error(test_y, y_pred)
-    print("Median Absolute Error:" + str(Medae))
-
-    print("Classification report for Test data %s:\n%s\n\n"
-          % (scaler, metrics.classification_report(test_y, y_pred)))
+    fig, axes = plt.subplots(3, 2, figsize=(10, 15))
+    X, y, test_X, test_y = split_data()
+    title = "Learning Curves (NN)"
+    # build the estimator- default cv: 5 cross validation
+    estimator = nn = MLPClassifier(hidden_layer_sizes=(25, 15, 25), max_iter=300,
+                                   activation='relu', solver='adam', alpha=0.0001,
+                                   learning_rate='constant', learning_rate_init=0.001)
+    plot_Validation_curve(estimator, title, X, y, axes=axes[:, 0], ylim=(0.0, 1.01),
+                           n_jobs=-1)
+    plt.show()
