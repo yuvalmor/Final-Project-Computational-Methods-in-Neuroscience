@@ -2,7 +2,7 @@ from sklearn.model_selection import KFold
 from mlxtend.plotting import plot_learning_curves
 from sklearn.preprocessing import StandardScaler
 from sklearn.neural_network import MLPClassifier
-from prepare_data import split_data
+from prepare_data import prepare_data
 from sklearn.model_selection import learning_curve
 import matplotlib.pyplot as plt
 from sklearn.model_selection import cross_val_score
@@ -46,7 +46,7 @@ def plot_Validation_curve(estimator, title, X, y, axes=None, ylim=None, cv=None,
 
 if __name__ == '__main__':
     fig, axes = plt.subplots(3, 2, figsize=(10, 15))
-    X, y, test_X, test_y = split_data()
+    X, y, test_X, test_y = prepare_data()
     title = "Learning Curves (NN)"
     # build the estimator- default cv: 5 cross validation
     estimator = nn = MLPClassifier(hidden_layer_sizes=(25, 15, 25), max_iter=300,

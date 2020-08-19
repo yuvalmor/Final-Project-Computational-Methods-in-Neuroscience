@@ -1,21 +1,11 @@
 import numpy as np
-
-SPLIT_PERCENTAGE = 0.8
-UNDER_THRESHOLD = 1
-ABOVE_THRESHOLD = 2
+from sklearn.model_selection import train_test_split
 
 gender_converter = {"M": 1, "F": 2, "I": 3}
 
 
-# Shuffle accordingly the data and the lables
-def shuffle_data(data, labels):
-    random_order = np.arange(data.shape[0])
-    np.random.shuffle(random_order)
-    return data[random_order], labels[random_order]
-
-
-# Split Abalone age into three classes: young (age under 6, adult (age between 6 to 10 ), old (age above 10)
-def split_age_to_classes(labels):
+# Classify Abalone age into three classes: young (age under 6, adult (age between 6 to 10 ), old (age above 10)
+def classify_age(labels):
     for label in range(len(labels)):
         if labels[label] < 6:
             labels[label] = 1
@@ -34,20 +24,12 @@ def prepare_data():
     # remove labels from data
     data = np.delete(data, [last_column], axis=1)
     # convert gender to numbers
-    for row in data:
-        row[0] = gender_converter[row[0]]
+    for sample in data:
+        sample[0] = gender_converter[sample[0]]
     # convert the data to floats
     data = data.astype(float)
     labels = labels.astype(np.double)
-    labels = split_age_to_classes(labels)
-    # shuffle the data
-    data, labels = shuffle_data(data, labels)
-    return data, labels
-
-
-def split_data():
-    data, labels = prepare_data()
-    num_of_rows = int(SPLIT_PERCENTAGE * (len(data)))
-    train_data, train_labels = data[:num_of_rows, :], labels[:num_of_rows]
-    test_data, test_labels = data[num_of_rows:, :], labels[num_of_rows:]
+    labels = classify_age(labels)
+    # shuffle and split the data
+    train_data, test_data, train_labels, test_labels = train_test_split(data, labels)
     return train_data, train_labels, test_data, test_labels
