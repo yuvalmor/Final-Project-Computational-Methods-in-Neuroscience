@@ -1,3 +1,4 @@
+from plot_validation_curve import plot_validation_curve as pvc
 from sklearn.neural_network import MLPClassifier
 from prepare_data import prepare_data
 from sklearn.model_selection import learning_curve

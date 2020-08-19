@@ -4,7 +4,7 @@ import numpy as np
 
 
 # plot validation curve
-def plot_Validation_curve(estimator, title, X, y, ylim=None, cv=None,
+def plot_validation_curve(estimator, title, X, y, ylim=None, cv=None,
                           n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
     plt.title(title)
     if ylim is not None:
