@@ -12,7 +12,7 @@ def get_nn_estimator(alpha=0.0):
                          learning_rate='constant', learning_rate_init=0.001)
 
 
-def lerning_curve_nn(train_x, train_y, alpha):
+def learning_curve_nn(train_x, train_y, alpha):
     title = "Learning Curves (NN)"
     # build the estimator
     estimator = get_nn_estimator(alpha)
