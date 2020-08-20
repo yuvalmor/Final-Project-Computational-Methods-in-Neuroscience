@@ -4,14 +4,14 @@ from sklearn.model_selection import train_test_split
 gender_converter = {"M": 1, "F": 2, "I": 3}
 
 
-# Classify Abalone age into three classes: young (age under 6, adult (age between 6 to 10 ), old (age above 10)
+# Classify Abalone age into three classes
 def classify_age(labels):
     for label in range(len(labels)):
-        if labels[label] < 6:
+        if labels[label] < 9:
             labels[label] = 1
-        if 6 <= labels[label] < 11:
+        if 9 <= labels[label] < 11:
             labels[label] = 2
-        if labels[label] >= 11:
+        if 11 <= labels[label]:
             labels[label] = 3
     return labels
 
