@@ -28,7 +28,7 @@ def prepare_data():
         sample[0] = gender_converter[sample[0]]
     # convert the data to floats
     data = data.astype(float)
-    labels = labels.astype(np.double)
+    labels = labels.astype(float)
     labels = classify_age(labels)
     # shuffle and split the data
     train_data, test_data, train_labels, test_labels = train_test_split(data, labels)
