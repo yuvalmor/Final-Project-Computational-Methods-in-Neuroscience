@@ -9,14 +9,14 @@ warnings.simplefilter("ignore")
 def get_nn_estimator(alpha=0.0):
     return MLPClassifier(hidden_layer_sizes=(10, 5, 10), max_iter=70,
                          activation='relu', solver='adam', alpha=alpha,
-                         learning_rate='constant', learning_rate_init=0.001)
+                         learning_rate='constant', learning_rate_init=0.001, shuffle=True)
 
 
 def learning_curve_nn(train_x, train_y, alpha):
     title = "Learning Curves (NN)"
     # build the estimator
     estimator = get_nn_estimator(alpha)
-    pvc(estimator, title, train_x, train_y, ylim=(0.2, 0.4), cv=5,
+    pvc(estimator, title, train_x, train_y, ylim=(0.2, 0.5), cv=5,
         n_jobs=-1)
 
 
