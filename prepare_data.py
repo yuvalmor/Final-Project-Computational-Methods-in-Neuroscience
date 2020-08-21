@@ -1,7 +1,20 @@
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
 
-gender_converter = {"M": 1, "F": 2, "I": 3}
+
+def gender_converter(data):
+    # convert gender to one hot
+    temp = np.zeros(shape=(len(data), 3))
+    data = np.append(data, temp, axis=1)
+    for sample in data:
+        if sample[0] == 'I':
+            sample[-3] = 1
+        if sample[0] == 'F':
+            sample[-2] = 1
+        if sample[0] == 'M':
+            sample[-1] = 1
+    return np.delete(data, [0], axis=1)
 
 
 # Classify Abalone age into three classes
@@ -23,9 +36,7 @@ def prepare_data():
     labels = data[:, last_column]
     # remove labels from data
     data = np.delete(data, [last_column], axis=1)
-    # convert gender to numbers
-    for sample in data:
-        sample[0] = gender_converter[sample[0]]
+    data=gender_converter(data)
     # convert the data to floats
     data = data.astype(float)
     labels = labels.astype(float)
