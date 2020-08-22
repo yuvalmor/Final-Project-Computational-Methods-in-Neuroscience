@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 
@@ -41,6 +42,7 @@ def prepare_data():
     data = data.astype(float)
     labels = labels.astype(float)
     labels = classify_age(labels)
+    preprocessing.normalize(data)
     # shuffle and split the data
     train_data, test_data, train_labels, test_labels = train_test_split(data, labels)
     return train_data, train_labels, test_data, test_labels
