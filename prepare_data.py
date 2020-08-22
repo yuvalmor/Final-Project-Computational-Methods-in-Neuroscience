@@ -20,11 +20,11 @@ def gender_converter(data):
 # Classify Abalone age into three classes
 def classify_age(labels):
     for label in range(len(labels)):
-        if labels[label] < 7:
+        if labels[label] < 9:
             labels[label] = 1
-        if 7 <= labels[label] < 14:
+        if 9 <= labels[label] < 11:
             labels[label] = 2
-        if 14 <= labels[label]:
+        if 11 <= labels[label]:
             labels[label] = 3
     return labels
 
