@@ -1,7 +1,6 @@
 import numpy as np
 from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
 
 
 def gender_converter(data):
@@ -21,11 +20,11 @@ def gender_converter(data):
 # Classify Abalone age into three classes
 def classify_age(labels):
     for label in range(len(labels)):
-        if labels[label] < 9:
+        if labels[label] < 7:
             labels[label] = 1
-        if 9 <= labels[label] < 11:
+        if 7 <= labels[label] < 14:
             labels[label] = 2
-        if 11 <= labels[label]:
+        if 14 <= labels[label]:
             labels[label] = 3
     return labels
 
