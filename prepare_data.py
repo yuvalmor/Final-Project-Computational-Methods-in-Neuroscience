@@ -36,7 +36,7 @@ def prepare_data():
     labels = data[:, last_column]
     # remove labels from data
     data = np.delete(data, [last_column], axis=1)
-    data=gender_converter(data)
+    data = gender_converter(data)
     # convert the data to floats
     data = data.astype(float)
     labels = labels.astype(float)
@@ -44,4 +44,5 @@ def prepare_data():
     preprocessing.normalize(data)
     # shuffle and split the data
     train_data, test_data, train_labels, test_labels = train_test_split(data, labels)
-    return train_data, train_labels, test_data, test_labels
+    train_data, validation_data, train_labels, validation_labels = train_test_split(train_data, train_labels)
+    return train_data, train_labels, validation_data, validation_labels, test_data, test_labels

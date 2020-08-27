@@ -1,4 +1,4 @@
-from plot_validation_curve import plot_validation_curve as pvc
+#from plot_validation_curve import plot_validation_curve as pvc
 from sklearn.neural_network import MLPClassifier
 from grid_parameter_search import grid_search
 import numpy as np
