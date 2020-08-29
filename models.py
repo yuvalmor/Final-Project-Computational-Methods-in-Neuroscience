@@ -2,6 +2,7 @@ from sklearn import svm
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 
+
 def get_svm_model(**kwargs):
     return svm.SVC(**kwargs)
 
