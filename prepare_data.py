@@ -43,7 +43,12 @@ def prepare_data():
     labels = labels.astype(float)
     # Classify the rings number to three classes
     labels = classify_rings(labels)
-    # Shuffle and split the data for: training, validation and test set
+    # Shuffle and split the data for: training and test set
     train_data, test_data, train_labels, test_labels = train_test_split(data, labels)
-    train_data, validation_data, train_labels, validation_labels = train_test_split(train_data, train_labels)
-    return train_data, train_labels, validation_data, validation_labels, test_data, test_labels
+    return train_data, train_labels, test_data, test_labels
+
+
+def prepare_validation(data, labels):
+    # Shuffle and split the data for: training and validation set
+    train_data, validation_data, train_labels, validation_labels = train_test_split(data, labels)
+    return train_data, train_labels, validation_data, validation_labels
