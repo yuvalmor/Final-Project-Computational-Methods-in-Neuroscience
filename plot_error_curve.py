@@ -3,7 +3,7 @@ import constants
 
 
 def plot_error_curve(training_error_score, validation_error_score):
-    plt.title("Error score as function of train size")
+    plt.title("Error score as function of training set size")
     plt.xlabel("Train size")
     plt.ylabel("Error score")
     plt.ylim(0.0, 1.0)
