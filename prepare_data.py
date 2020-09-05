@@ -1,12 +1,11 @@
 import numpy as np
-from sklearn import preprocessing
 from sklearn.model_selection import train_test_split
 
 
+# Convert abalone gender to one hot encoding
 def gender_converter(data):
-    # convert gender to one hot
-    temp = np.zeros(shape=(len(data), 3))
-    data = np.append(data, temp, axis=1)
+    additional_columns = np.zeros(shape=(len(data), 3))
+    data = np.append(data, additional_columns, axis=1)
     for sample in data:
         if sample[0] == 'I':
             sample[-3] = 1
@@ -17,8 +16,8 @@ def gender_converter(data):
     return np.delete(data, [0], axis=1)
 
 
-# Classify Abalone age into three classes
-def classify_age(labels):
+# Classify abalone rings into three classes (ranges)
+def classify_rings(labels):
     for label in range(len(labels)):
         if labels[label] < 9:
             labels[label] = 1
@@ -30,19 +29,21 @@ def classify_age(labels):
 
 
 def prepare_data():
-    # load data set
+    # Load data set
     data = np.genfromtxt("data/abalone_data", delimiter=",", dtype="str")
+    # Set the labels (number of rings - last attribute)
     last_column = np.size(data, 1) - 1
     labels = data[:, last_column]
-    # remove labels from data
+    # Remove labels from data
     data = np.delete(data, [last_column], axis=1)
+    # One-Hot encoding for the gender attribute
     data = gender_converter(data)
-    # convert the data to floats
+    # Convert the data to floats
     data = data.astype(float)
     labels = labels.astype(float)
-    labels = classify_age(labels)
-    preprocessing.normalize(data)
-    # shuffle and split the data
+    # Classify the rings number to three classes
+    labels = classify_rings(labels)
+    # Shuffle and split the data for: training, validation and test set
     train_data, test_data, train_labels, test_labels = train_test_split(data, labels)
     train_data, validation_data, train_labels, validation_labels = train_test_split(train_data, train_labels)
     return train_data, train_labels, validation_data, validation_labels, test_data, test_labels
