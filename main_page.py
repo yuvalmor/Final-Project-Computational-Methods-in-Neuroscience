@@ -6,6 +6,7 @@ from calculate_errors import calculate_error_for_different_training_sizes, calcu
 from models import get_svm_model, get_decision_tree_model, get_logistic_regression_model
 from tabulate import tabulate
 from plot_error_curve import plot_error_curve
+import grid_parameter_search as grid_earch
 
 
 if __name__ == '__main__':
@@ -16,6 +17,9 @@ if __name__ == '__main__':
     svm_model = get_svm_model(C=1, kernel='rbf')
     train_error, validation_error = calculate_error_for_different_training_sizes(
         train_data, train_labels, validation_data, validation_labels, svm_model)
+
+    print(grid_earch.grid_search(svm_model,grid_earch.get_svm_param_grid(),train_data,train_labels))
+
     plot_error_curve(train_error, validation_error)
 
     print(len(train_data))
