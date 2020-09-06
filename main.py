@@ -1,10 +1,10 @@
+from accuracy_presentation import represent_accuracy
 from prepare_data import prepare_data, prepare_validation
 from plot_three_attributes import plot_three_attributes
 import numpy as np
 
 from calculate_errors import calculate_error_for_different_training_sizes, calculate_error_with_cross_validation
 from models import get_svm_model, get_decision_tree_model, get_logistic_regression_model
-from tabulate import tabulate
 from plot_error_curve import plot_error_curve
 import grid_parameter_search as grid_earch
 
@@ -21,20 +21,9 @@ if __name__ == '__main__':
     print(grid_earch.grid_search(svm_model,grid_earch.get_svm_param_grid(),train_data,train_labels))
 
     plot_error_curve(train_error, validation_error)
-
-    print(len(train_data))
     train_error_cv, validation_error_cv = calculate_error_with_cross_validation(
         train_data, train_labels, svm_model)
-    print(1-train_error[5])
-    print(1-validation_error[5])
-    train_acc = 1 - np.mean(train_error)
-    validation_acc = 1 - np.mean(validation_error)
-    train_acc_cv = 1 - np.mean(train_error_cv)
-    validation_acc_cv = 1 - np.mean(validation_error_cv)
-    table = [["Train", str(train_acc)], ["Validation", str(validation_acc)],
-             ["Train CV", str(train_acc_cv)], ["Validation CV", str(validation_acc_cv)]]
-    headers = ["SVM model", "Accuracy"]
-    print(tabulate(table, headers, tablefmt="github"))
+    represent_accuracy("SVM model", train_error, validation_error, train_error_cv, validation_error_cv)
 
 
 
