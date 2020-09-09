@@ -3,9 +3,9 @@ import numpy as np
 import constants
 
 
-def grid_search(estimator, param_grid, train_x, train_y):
+def grid_search(estimator, param_grid, train_data, train_labels):
     clf = GridSearchCV(estimator, param_grid)
-    clf.fit(train_x, train_y)
+    clf.fit(train_data, train_labels)
     print("The optimal parameters are:")
     print(clf.best_params_)
     print("The best accuracy is:")
