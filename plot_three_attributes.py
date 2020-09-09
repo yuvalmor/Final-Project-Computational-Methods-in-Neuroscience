@@ -1,7 +1,6 @@
+from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
 import constants
-from mpl_toolkits.mplot3d import axes3d
-
 
 def plot_three_attributes(train_data, train_labels):
     x_1 = []
