@@ -73,8 +73,7 @@ if __name__ == '__main__':
                            train_error_cv, validation_error_cv)
 
         # Logistic regression model without regularization
-        logistic_regression_without_regularization = get_logistic_regression_model(penalty='l2',
-                                                                                   solver='lbfgs', C=10000)
+        logistic_regression_without_regularization = get_logistic_regression_model(penalty='none', solver='lbfgs')
         train_error, validation_error = calculate_error_for_different_training_sizes(
             train_data, train_labels, validation_data, validation_labels, logistic_regression_without_regularization)
         plot_error_curve(train_error, validation_error)
