@@ -61,6 +61,7 @@ if __name__ == '__main__':
     with warnings.catch_warnings():
         warnings.filterwarnings("ignore", category=FitFailedWarning)
         warnings.filterwarnings("ignore", category=ConvergenceWarning)
+        warnings.filterwarnings("ignore", category=UserWarning)
         # Logistic regression model
         logistic_regression_model = get_logistic_regression_model(penalty='l2', solver='lbfgs', C=1)
         train_error, validation_error = calculate_error_for_different_training_sizes(
